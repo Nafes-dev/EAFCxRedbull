@@ -63,28 +63,6 @@
   }
   @keyframes twinkle { 0% { opacity: .55 } 100% { opacity: .95 } }
 
-  /* Pitch glow at the horizon */
-  .pitch-glow {
-    position: fixed; left: 0; right: 0; bottom: 0; height: 45vh; z-index: 2;
-    background:
-      radial-gradient(ellipse 60% 100% at 50% 100%, rgba(255, 201, 6, .18) 0%, transparent 60%),
-      radial-gradient(ellipse 80% 100% at 50% 100%, rgba(14, 42, 107, .35) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  /* ===== Stadium silhouette + floodlights ===== */
-  .skyline {
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 3;
-    width: 100%; height: 38vh;
-    pointer-events: none;
-    filter: drop-shadow(0 -2px 24px rgba(255, 201, 6, .14));
-  }
-  .skyline svg { width: 100%; height: 100%; display: block; }
-
-  .skyline .lamp { fill: #fff8c2; }
-  .skyline .lamp.warm { fill: #ffc906; }
-  .skyline .lamp.dim  { fill: #2a2a2a; }
-
   /* ===== HUD ===== */
   .stage {
     position: relative;
@@ -392,100 +370,9 @@
 </head>
 <body>
 
-<!-- Backdrop layers -->
+<!-- Backdrop layers — clean sky, no skyline / pitch -->
 <div class="sky"></div>
 <div class="stars"></div>
-<div class="pitch-glow"></div>
-
-<!-- Stadium silhouette: domed bowl + 4 floodlight towers -->
-<div class="skyline" aria-hidden="true">
-<svg viewBox="0 0 1600 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bowl" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#040c2e"/>
-      <stop offset="100%" stop-color="#020517"/>
-    </linearGradient>
-    <linearGradient id="bowl2" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#071640"/>
-      <stop offset="100%" stop-color="#030a1f"/>
-    </linearGradient>
-    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0%" stop-color="#fff8c2" stop-opacity=".95"/>
-      <stop offset="60%" stop-color="#ffc906" stop-opacity=".4"/>
-      <stop offset="100%" stop-color="#ffc906" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-
-  <!-- Back tier silhouette (further bowl shell) -->
-  <path d="M 0 400 L 0 280 Q 100 230 280 220 Q 600 200 800 198 Q 1000 200 1320 220 Q 1500 230 1600 280 L 1600 400 Z"
-        fill="url(#bowl2)" opacity=".9"/>
-
-  <!-- Front tier (closer bowl shell) -->
-  <path d="M 0 400 L 0 320 Q 120 280 320 270 Q 600 256 800 254 Q 1000 256 1280 270 Q 1480 280 1600 320 L 1600 400 Z"
-        fill="url(#bowl)"/>
-
-  <!-- Floodlight towers + lamp arrays -->
-  <g>
-    <!-- Tower 1 (far left) -->
-    <rect x="172" y="120" width="6" height="160" fill="#02091f"/>
-    <rect x="158" y="98" width="34" height="22" rx="3" fill="#0a1a45" stroke="#1a3275" stroke-width="1"/>
-    <circle class="lamp" cx="166" cy="109" r="3.2"/>
-    <circle class="lamp warm" cx="175" cy="109" r="3.2"/>
-    <circle class="lamp" cx="184" cy="109" r="3.2"/>
-    <!-- light cone -->
-    <ellipse cx="175" cy="160" rx="80" ry="240" fill="url(#glow)" opacity=".35"/>
-
-    <!-- Tower 2 -->
-    <rect x="528" y="92" width="6" height="190" fill="#02091f"/>
-    <rect x="514" y="68" width="34" height="22" rx="3" fill="#0a1a45" stroke="#1a3275" stroke-width="1"/>
-    <circle class="lamp warm" cx="522" cy="79" r="3.2"/>
-    <circle class="lamp" cx="531" cy="79" r="3.2"/>
-    <circle class="lamp warm" cx="540" cy="79" r="3.2"/>
-    <ellipse cx="531" cy="140" rx="90" ry="260" fill="url(#glow)" opacity=".4"/>
-
-    <!-- Tower 3 -->
-    <rect x="1066" y="92" width="6" height="190" fill="#02091f"/>
-    <rect x="1052" y="68" width="34" height="22" rx="3" fill="#0a1a45" stroke="#1a3275" stroke-width="1"/>
-    <circle class="lamp" cx="1060" cy="79" r="3.2"/>
-    <circle class="lamp warm" cx="1069" cy="79" r="3.2"/>
-    <circle class="lamp" cx="1078" cy="79" r="3.2"/>
-    <ellipse cx="1069" cy="140" rx="90" ry="260" fill="url(#glow)" opacity=".4"/>
-
-    <!-- Tower 4 (far right) -->
-    <rect x="1422" y="120" width="6" height="160" fill="#02091f"/>
-    <rect x="1408" y="98" width="34" height="22" rx="3" fill="#0a1a45" stroke="#1a3275" stroke-width="1"/>
-    <circle class="lamp warm" cx="1416" cy="109" r="3.2"/>
-    <circle class="lamp" cx="1425" cy="109" r="3.2"/>
-    <circle class="lamp warm" cx="1434" cy="109" r="3.2"/>
-    <ellipse cx="1425" cy="160" rx="80" ry="240" fill="url(#glow)" opacity=".35"/>
-  </g>
-
-  <!-- Pitch + center circle hint -->
-  <g opacity=".6">
-    <ellipse cx="800" cy="394" rx="780" ry="40" fill="#062a1a"/>
-    <ellipse cx="800" cy="394" rx="780" ry="40" fill="none" stroke="#ffc906" stroke-width="1" stroke-opacity=".35"/>
-    <ellipse cx="800" cy="394" rx="120" ry="14" fill="none" stroke="#ffc906" stroke-width="1.2" stroke-opacity=".5"/>
-    <line x1="800" y1="380" x2="800" y2="400" stroke="#ffc906" stroke-width="1" stroke-opacity=".4"/>
-  </g>
-
-  <!-- Goalposts (tiny accents at far ends of the pitch) -->
-  <g stroke="#ffe48a" stroke-width="1.4" fill="none" opacity=".7">
-    <path d="M 80 396 L 80 380 L 110 380 L 110 396"/>
-    <path d="M 1520 396 L 1520 380 L 1490 380 L 1490 396"/>
-  </g>
-
-  <!-- Crowd dots in the bowl -->
-  <g fill="#1a2a55" opacity=".7">
-    <circle cx="80"  cy="305" r="1.4"/><circle cx="160" cy="300" r="1.4"/>
-    <circle cx="240" cy="295" r="1.4"/><circle cx="340" cy="292" r="1.4"/>
-    <circle cx="440" cy="290" r="1.4"/><circle cx="600" cy="288" r="1.4"/>
-    <circle cx="760" cy="286" r="1.4"/><circle cx="900" cy="288" r="1.4"/>
-    <circle cx="1040" cy="290" r="1.4"/><circle cx="1180" cy="292" r="1.4"/>
-    <circle cx="1300" cy="296" r="1.4"/><circle cx="1420" cy="302" r="1.4"/>
-    <circle cx="1520" cy="306" r="1.4"/>
-  </g>
-</svg>
-</div>
 
 <!-- ===== Main stage ===== -->
 <div class="stage">
@@ -503,8 +390,8 @@
     </div>
     <div class="stats">
       <div class="stat"><div class="label">Round</div><div class="value" id="round-val">0/5</div></div>
-      <div class="stat"><div class="label">Best (ms)</div><div class="value" id="best-val">—</div></div>
-      <div class="stat"><div class="label">Avg (ms)</div><div class="value" id="avg-val">—</div></div>
+      <div class="stat"><div class="label">Best (ms off)</div><div class="value" id="best-val">—</div></div>
+      <div class="stat"><div class="label">Avg (ms off)</div><div class="value" id="avg-val">—</div></div>
     </div>
   </header>
 
@@ -513,8 +400,8 @@
     <div class="number" id="number"><span class="slot" id="seg-tens"></span><span class="slot" id="seg-ones">0</span><span class="slot dot">.</span><span class="slot" id="seg-deca">0</span><span class="slot" id="seg-centi">0</span></div>
     <div class="toast" id="toast"></div>
     <div class="prompt" id="prompt">
-      <div class="key">PRESS SPACE OR CLICK</div>
-      <div class="hint">only when the number turns <b>yellow</b></div>
+      <div class="key">STOP AT 7.00</div>
+      <div class="hint">press <b>space</b> or <b>click</b> exactly on 7</div>
     </div>
   </main>
 
@@ -536,9 +423,9 @@
     <p class="tag">FC Mobile × Red Bull M.E.O.</p>
     <div class="rules">
       A stopwatch ticks up from <b>0.00</b>.<br>
-      A random second is the winning one — the display flashes <b>yellow</b> for a short window starting at that second (e.g. <b>6.00 → ~6.35</b>).<br>
-      Hit <b>SPACE</b> or <b>CLICK</b> anywhere during the yellow window. <span class="x">Do NOT</span> press on white.<br>
-      Five rounds. Fastest reaction wins.
+      Stop it as close to <b>7.00</b> as you can — press <b>SPACE</b> or <b>CLICK</b> anywhere.<br>
+      The closer to <b>7.00</b>, the better the score (in ms off-target).<br>
+      Five rounds. Smallest deviation wins.
     </div>
     <button class="btn" id="start-btn">START</button>
     <div class="hint">or press space · click anywhere</div>
@@ -550,15 +437,15 @@
   'use strict';
 
   const TOTAL_ROUNDS = 5;
-  const BOLT_YELLOW = '#FFC906';        // Red Bull yellow — the "go" color
-  const DECOY_COLOR = '#ffffff';        // stable color for every non-target frame
+  const BOLT_YELLOW = '#FFC906';        // Red Bull yellow — accent / win color
+  const RB_RED      = '#DB0A40';        // Red Bull red — used for big misses
+  const DECOY_COLOR = '#ffffff';        // stopwatch is white while running
 
-  // Stopwatch range. The yellow window opens at a whole second (e.g. 6.00) and
-  // closes 350ms later. Tight enough to require reaction, but the user can watch
-  // the seconds tick up and mentally prepare.
-  const TARGET_MIN_SEC = 2;
-  const TARGET_MAX_SEC = 13;
-  const GREEN_WINDOW_MS = 350;          // window is 0.35s wide
+  const TARGET_MS = 7000;               // user must stop the clock at 7.00 seconds
+  const MAX_ROUND_MS = 12000;           // safety: auto-fail if no press by 12.00
+  // Accuracy tiers (absolute distance from 7.00, in ms)
+  const TIER_PERFECT_MS = 50;
+  const TIER_GOOD_MS    = 300;
 
   const $number = document.getElementById('number');
   const $segTens  = document.getElementById('seg-tens');
@@ -575,12 +462,11 @@
   const $startBtn = document.getElementById('start-btn');
 
   let round = 0;
-  let times = [];
-  let state = 'idle';      // idle | running | target | resolved | done
+  let times = [];          // absolute distance from 7000 (ms) per successful press
+  let state = 'idle';      // idle | running | resolved | done
   let acceptingInput = false;
   let rafId = null;
   let roundStartAt = 0;
-  let targetMs = 0;
 
   function rand(min, max) { return Math.random() * (max - min) + min; }
   function randInt(min, max) { return Math.floor(rand(min, max + 1)); }
@@ -647,7 +533,6 @@
   }
 
   function startRound() {
-    targetMs = randInt(TARGET_MIN_SEC, TARGET_MAX_SEC) * 1000;
     roundStartAt = performance.now();
     state = 'running';
     acceptingInput = true;
@@ -656,26 +541,21 @@
     tick();
   }
 
+  // Stopwatch loop — just ticks up. No automatic color change; the user
+  // has to read the digits and stop the clock at 7.00 themselves.
   function tick() {
-    if (state !== 'running' && state !== 'target') return;
-    const now = performance.now();
-    const elapsed = now - roundStartAt;
+    if (state !== 'running') return;
+    const elapsed = performance.now() - roundStartAt;
 
-    if (elapsed >= targetMs + GREEN_WINDOW_MS) {
+    // Safety: auto-fail if the user never presses.
+    if (elapsed >= MAX_ROUND_MS) {
       state = 'resolved';
       acceptingInput = false;
-      setNumberMs(targetMs);
-      setNumberColor('#ff3a55');
-      showToast('TOO SLOW', 'miss');
-      setTimeout(nextRound, 900);
+      setNumberMs(MAX_ROUND_MS);
+      setNumberColor(RB_RED);
+      showToast('NO PRESS', 'miss');
+      setTimeout(nextRound, 1100);
       return;
-    }
-
-    if (elapsed >= targetMs) {
-      if (state !== 'target') {
-        state = 'target';
-        setNumberColor(BOLT_YELLOW);
-      }
     }
 
     setNumberMs(elapsed);
@@ -683,32 +563,40 @@
   }
 
   function handleSpace() {
-    if (!acceptingInput) return;
+    if (!acceptingInput || state !== 'running') return;
 
-    if (state === 'target') {
-      clearTimers();
-      acceptingInput = false;
-      const now = performance.now();
-      const elapsed = now - roundStartAt;
-      const dt = Math.round(elapsed - targetMs);
-      times.push(dt);
-      updateStats();
-      setNumberMs(elapsed);
-      setNumberColor(BOLT_YELLOW);
-      state = 'resolved';
-      showToast(`${dt} ms`, 'hit');
-      setTimeout(nextRound, 900);
-      return;
-    }
+    clearTimers();
+    acceptingInput = false;
+    state = 'resolved';
 
-    if (state === 'running') {
-      clearTimers();
-      acceptingInput = false;
-      state = 'resolved';
-      setNumberColor('#ff3a55');
-      showToast('FALSE START', 'miss');
-      setTimeout(nextRound, 900);
+    const elapsed = performance.now() - roundStartAt;
+    const distance = Math.round(elapsed - TARGET_MS);  // signed: + late, - early
+    const abs = Math.abs(distance);
+    times.push(abs);
+    updateStats();
+
+    // Freeze the stopwatch on the value the user stopped at.
+    setNumberMs(elapsed);
+
+    let text, cls, color;
+    if (abs <= TIER_PERFECT_MS) {
+      text = 'PERFECT';
+      cls = 'hit';
+      color = BOLT_YELLOW;
+    } else if (abs <= TIER_GOOD_MS) {
+      const sign = distance < 0 ? '−' : '+';
+      text = `${sign}${abs} ms`;
+      cls = 'hit';
+      color = BOLT_YELLOW;
+    } else {
+      const dir = distance < 0 ? 'EARLY' : 'LATE';
+      text = `${(abs/1000).toFixed(2)}s ${dir}`;
+      cls = 'miss';
+      color = RB_RED;
     }
+    setNumberColor(color);
+    showToast(text, cls);
+    setTimeout(nextRound, 1100);
   }
 
   function endGame() {
@@ -722,11 +610,11 @@
 
     let grade = '—';
     if (best !== null) {
-      if (best < 180) grade = 'S · LIGHTNING';
-      else if (best < 230) grade = 'A · ELITE';
-      else if (best < 290) grade = 'B · SHARP';
-      else if (best < 360) grade = 'C · STEADY';
-      else grade = 'D · WARM-UP';
+      if (best <= 30)       grade = 'S · PERFECT';
+      else if (best <= 80)  grade = 'A · ELITE';
+      else if (best <= 180) grade = 'B · SHARP';
+      else if (best <= 350) grade = 'C · STEADY';
+      else                  grade = 'D · WARM-UP';
     }
 
     const failed = best === null;
@@ -741,8 +629,8 @@
       <h1>MATCH <span>COMPLETE</span></h1>
       <p class="tag">FC Mobile × Red Bull M.E.O.</p>
       <div class="big ${failed ? 'bad' : ''}">${failed ? 'NO TIME' : best + ' ms'}</div>
-      <div class="sub">Best Reaction</div>
-      ${failed ? '' : `<div class="sub" style="margin-top:14px">Avg ${avg} ms · ${times.length}/${TOTAL_ROUNDS} hits</div>`}
+      <div class="sub">Closest to 7.00</div>
+      ${failed ? '' : `<div class="sub" style="margin-top:14px">Avg ${avg} ms off · ${times.length}/${TOTAL_ROUNDS} stops</div>`}
       ${failed ? '' : `<div class="grade">${grade}</div>`}
       <div style="margin-top:28px"><button class="btn" id="restart-btn">PLAY AGAIN</button></div>
       <div class="hint">or press space · click anywhere</div>

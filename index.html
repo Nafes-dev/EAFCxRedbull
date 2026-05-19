@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>FC Mobile × Red Bull M.E.O. · Reaction Shot</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Anton&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bolt: #FFC906;             /* Red Bull yellow — win / accent */
+    --bolt-glow: #FFC90688;
+    --rb-red: #DB0A40;           /* Red Bull red — used for misses + flourishes */
+    --rb-blue-deep: #001E5C;
+    --rb-blue: #0E2A6B;
+    --night-top: #03081f;
+    --night-mid: #061037;
+    --night-low: #0c1c52;
+    --warn: #ff3a55;
+    --ink: #f4f6fa;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+    color: var(--ink);
+    font-family: 'Rajdhani', system-ui, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* ===== Sky — Red Bull navy night ===== */
+  .sky {
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, #0a2466 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 20% 80%, #5a0a2a 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, #1a2a78 0%, transparent 70%),
+      linear-gradient(180deg, var(--night-top) 0%, var(--night-mid) 45%, var(--night-low) 75%, #182a6e 100%);
+    z-index: 0;
+  }
+  .stars {
+    position: fixed; inset: 0; z-index: 1;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent 100%),
+      radial-gradient(1px 1px at 28% 9%, #ffe7a0 50%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 46% 22%, #fff 50%, transparent 100%),
+      radial-gradient(1px 1px at 62% 12%, #fff 50%, transparent 100%),
+      radial-gradient(1px 1px at 78% 28%, #ffdf85 50%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 88% 14%, #fff 50%, transparent 100%),
+      radial-gradient(1px 1px at 22% 36%, #fff 50%, transparent 100%),
+      radial-gradient(1px 1px at 70% 6%, #fff 50%, transparent 100%),
+      radial-gradient(1px 1px at 6% 30%, #fff 50%, transparent 100%),
+      radial-gradient(1px 1px at 52% 4%, #fff 50%, transparent 100%);
+    opacity: .8;
+    animation: twinkle 4s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle { 0% { opacity: .55 } 100% { opacity: .95 } }
+
+  /* Pitch glow at the horizon */
+  .pitch-glow {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 45vh; z-index: 2;
+    background:
+      radial-gradient(ellipse 60% 100% at 50% 100%, rgba(255, 201, 6, .18) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 100% at 50% 100%, rgba(14, 42, 107, .35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ===== Stadium silhouette + floodlights ===== */
+  .skyline {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 3;
+    width: 100%; height: 38vh;
+    pointer-events: none;
+    filter: drop-shadow(0 -2px 24px rgba(255, 201, 6, .14));
+  }
+  .skyline svg { width: 100%; height: 100%; display: block; }
+
+  .skyline .lamp { fill: #fff8c2; }
+  .skyline .lamp.warm { fill: #ffc906; }
+  .skyline .lamp.dim  { fill: #2a2a2a; }
+
+  /* ===== HUD ===== */
+  .stage {
+    position: relative;
+    z-index: 10;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  header.hud {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 36px;
+    gap: 24px;
+  }
+
+  /* Two-logo brand badge */
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand .logos {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .brand .logo-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 6px 10px;
+    height: 52px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .35), 0 0 0 1px rgba(255, 201, 6, .35);
+  }
+  .brand .logo-card img {
+    height: 100%;
+    width: auto;
+    display: block;
+  }
+  .brand .x {
+    font-family: 'Anton', sans-serif;
+    font-size: 24px;
+    color: var(--bolt);
+    text-shadow: 0 0 14px var(--bolt-glow);
+    line-height: 1;
+  }
+  .brand .meta {
+    display: flex; flex-direction: column;
+  }
+  .brand .title {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1;
+  }
+  .brand .title span { color: var(--bolt); }
+  .brand .subtitle {
+    font-size: 11px; letter-spacing: 6px;
+    color: #b8c4e8; text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .stats { display: flex; gap: 18px; }
+  .stat {
+    background: rgba(0, 14, 50, .65);
+    border: 1px solid rgba(255, 201, 6, .35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 10px 18px;
+    min-width: 110px;
+    border-radius: 6px;
+    text-align: center;
+  }
+  .stat .label {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: #9aa7d0;
+  }
+  .stat .value {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--bolt);
+    text-shadow: 0 0 14px var(--bolt-glow);
+    margin-top: 2px;
+  }
+
+  /* ===== Center number arena ===== */
+  .arena {
+    display: grid; place-items: center;
+    position: relative;
+    cursor: pointer;
+  }
+  .reticle {
+    position: absolute;
+    width: 460px; height: 460px;
+    border: 1px solid rgba(255, 201, 6, .22);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .reticle::before, .reticle::after {
+    content: ''; position: absolute; inset: 14%;
+    border: 1px dashed rgba(255, 201, 6, .14);
+    border-radius: 50%;
+  }
+  .reticle::after { inset: 28%; border-style: solid; opacity: .5; }
+
+  .number {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 180px;
+    line-height: 1;
+    text-shadow: 0 0 40px currentColor;
+    will-change: color;
+    white-space: nowrap;
+    color: #ffffff;
+  }
+  .number .slot {
+    display: inline-block;
+    width: 0.7em;
+    text-align: center;
+    vertical-align: baseline;
+  }
+  .number .slot.dot { width: 0.5em; }
+  .number.no-tens { padding-right: 0.7em; }
+
+  .prompt {
+    position: absolute;
+    bottom: 8%;
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
+    transition: opacity .25s ease;
+  }
+  .prompt.hidden { opacity: 0; }
+  .prompt .key {
+    display: inline-block;
+    padding: 8px 22px;
+    border: 1.5px solid var(--bolt);
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    letter-spacing: 5px;
+    color: var(--bolt);
+    background: rgba(255, 201, 6, .07);
+    box-shadow: 0 0 26px rgba(255, 201, 6, .2);
+  }
+  .prompt .hint {
+    margin-top: 12px;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: #b8c4e8;
+    text-transform: uppercase;
+  }
+  .prompt .hint b { color: var(--bolt); }
+
+  /* ===== Toast feedback ===== */
+  .toast {
+    position: absolute;
+    top: 22%; left: 50%; transform: translateX(-50%) translateY(-10px);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    letter-spacing: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+    border: 1px solid;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.hit  { color: var(--bolt); border-color: var(--bolt); background: rgba(255, 201, 6, .1); box-shadow: 0 0 30px var(--bolt-glow); }
+  .toast.miss { color: var(--rb-red); border-color: var(--rb-red); background: rgba(219, 10, 64, .12); box-shadow: 0 0 30px rgba(219, 10, 64, .4); }
+
+  /* ===== Footer ===== */
+  footer.foot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 36px 22px;
+    font-size: 11px; letter-spacing: 3px;
+    color: #8392bf;
+    text-transform: uppercase;
+  }
+  footer.foot .right { color: var(--bolt); opacity: .85; }
+
+  /* ===== Overlay / start + end ===== */
+  .overlay {
+    position: fixed; inset: 0; z-index: 50;
+    background: radial-gradient(ellipse at center, rgba(3, 8, 31, .85) 0%, rgba(0, 0, 0, .95) 70%);
+    display: grid; place-items: center;
+    transition: opacity .35s ease;
+    cursor: pointer;
+  }
+  .overlay.hidden { opacity: 0; pointer-events: none; }
+  .panel {
+    width: min(560px, 92vw);
+    text-align: center;
+    padding: 36px 36px 32px;
+    background: linear-gradient(180deg, rgba(0, 20, 60, .55), rgba(0, 5, 25, .65));
+    border: 1px solid rgba(255, 201, 6, .35);
+    border-radius: 14px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .55), 0 0 60px rgba(255, 201, 6, .12) inset;
+  }
+  /* Big paired logos on the panel */
+  .panel .panel-logos {
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    margin-bottom: 14px;
+  }
+  .panel .panel-logos .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 16px;
+    height: 86px;
+    display: flex; align-items: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .35), 0 0 0 1px rgba(255, 201, 6, .35);
+  }
+  .panel .panel-logos .card img { height: 100%; width: auto; display: block; }
+  .panel .panel-logos .x {
+    font-family: 'Anton', sans-serif;
+    font-size: 38px;
+    color: var(--bolt);
+    text-shadow: 0 0 18px var(--bolt-glow);
+  }
+  .panel h1 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: 38px;
+    letter-spacing: 6px;
+    margin: 10px 0 4px;
+    color: #fff;
+    text-transform: uppercase;
+  }
+  .panel h1 span { color: var(--bolt); }
+  .panel p.tag {
+    font-size: 12px; letter-spacing: 5px;
+    color: #b8c4e8; text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .panel .rules {
+    text-align: left;
+    margin: 0 0 24px;
+    padding: 16px 18px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, .35);
+    border: 1px solid rgba(255, 201, 6, .2);
+    font-size: 14px;
+    line-height: 1.7;
+    color: #dde6ff;
+  }
+  .panel .rules b { color: var(--bolt); font-weight: 700; }
+  .panel .rules .x { color: var(--rb-red); font-weight: 700; }
+  .btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: var(--bolt);
+    color: #1b0d00;
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    letter-spacing: 4px;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 0 30px var(--bolt-glow);
+    transition: transform .12s ease, box-shadow .12s ease;
+    text-transform: uppercase;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 36px var(--bolt-glow); }
+  .btn:active { transform: translateY(0); }
+  .panel .hint { margin-top: 14px; font-size: 11px; letter-spacing: 4px; color: #9aa7d0; text-transform: uppercase; }
+
+  /* ===== Result panel ===== */
+  .result .big {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 56px;
+    color: var(--bolt);
+    text-shadow: 0 0 24px var(--bolt-glow);
+    letter-spacing: 2px;
+  }
+  .result .big.bad { color: var(--rb-red); text-shadow: 0 0 24px rgba(219, 10, 64, .4); }
+  .result .sub { font-size: 13px; letter-spacing: 4px; color: #b8c4e8; text-transform: uppercase; margin-top: 6px; }
+  .result .grade {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 6px 18px;
+    border: 1px solid var(--bolt);
+    color: var(--bolt);
+    letter-spacing: 6px;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 720px) {
+    .number { font-size: 110px; }
+    .reticle { width: 280px; height: 280px; }
+    header.hud { padding: 14px 18px; flex-wrap: wrap; gap: 12px; }
+    .brand .logo-card { height: 42px; }
+    .brand .meta { display: none; }
+    .stats { width: 100%; justify-content: space-between; }
+    .stat { min-width: 0; flex: 1; padding: 8px 10px; }
+    .panel .panel-logos .card { height: 62px; padding: 8px 12px; }
+    .panel .panel-logos .x { font-size: 28px; }
+    .panel h1 { font-size: 28px; letter-spacing: 4px; }
+    footer.foot { padding: 12px 18px 16px; font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Backdrop layers -->
+<div class="sky"></div>
+<div class="stars"></div>
+<div class="pitch-glow"></div>
+
+<!-- Stadium silhouette: domed bowl + 4 floodlight towers -->
+<div class="skyline" aria-hidden="true">
+<svg viewBox="0 0 1600 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bowl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#040c2e"/>
+      <stop offset="100%" stop-color="#020517"/>
+    </linearGradient>
+    <linearGradient id="bowl2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#071640"/>
+      <stop offset="100%" stop-color="#030a1f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#fff8c2" stop-opacity=".95"/>
+      <stop offset="60%" stop-color="#ffc906" stop-opacity=".4"/>
+      <stop offset="100%" stop-color="#ffc906" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Back tier silhouette (further bowl shell) -->
+  <path d="M 0 400 L 0 280 Q 100 230 280 220 Q 600 200 800 198 Q 1000 200 1320 220 Q 1500 230 1600 280 L 1600 400 Z"
+        fill="url(#bowl2)" opacity=".9"/>
+
+  <!-- Front tier (closer bowl shell) -->
+  <path d="M 0 400 L 0 320 Q 120 280 320 270 Q 600 256 800 254 Q 1000 256 1280 270 Q 1480 280 1600 320 L 1600 400 Z"
+        fill="url(#bowl)"/>
+
+  <!-- Floodlight towers + lamp arrays -->
+  <g>
+    <!-- Tower 1 (far left) -->
+    <rect x="172" y="120" width="6" height="160" fill="#02091f"/>
+    <rect x="158" y="98" width="34" height="22" rx="3" fill="#0a1a45" stroke="#1a3275" stroke-width="1"/>
+    <circle class="lamp" cx="166" cy="109" r="3.2"/>
+    <circle class="lamp warm" cx="175" cy="109" r="3.2"/>
+    <circle class="lamp" cx="184" cy="109" r="3.2"/>
+    <!-- light cone -->
+    <ellipse cx="175" cy="160" rx="80" ry="240" fill="url(#glow)" opacity=".35"/>
+
+    <!-- Tower 2 -->
+    <rect x="528" y="92" width="6" height="190" fill="#02091f"/>
+    <rect x="514" y="68" width="34" height="22" rx="3" fill="#0a1a45" stroke="#1a3275" stroke-width="1"/>
+    <circle class="lamp warm" cx="522" cy="79" r="3.2"/>
+    <circle class="lamp" cx="531" cy="79" r="3.2"/>
+    <circle class="lamp warm" cx="540" cy="79" r="3.2"/>
+    <ellipse cx="531" cy="140" rx="90" ry="260" fill="url(#glow)" opacity=".4"/>
+
+    <!-- Tower 3 -->
+    <rect x="1066" y="92" width="6" height="190" fill="#02091f"/>
+    <rect x="1052" y="68" width="34" height="22" rx="3" fill="#0a1a45" stroke="#1a3275" stroke-width="1"/>
+    <circle class="lamp" cx="1060" cy="79" r="3.2"/>
+    <circle class="lamp warm" cx="1069" cy="79" r="3.2"/>
+    <circle class="lamp" cx="1078" cy="79" r="3.2"/>
+    <ellipse cx="1069" cy="140" rx="90" ry="260" fill="url(#glow)" opacity=".4"/>
+
+    <!-- Tower 4 (far right) -->
+    <rect x="1422" y="120" width="6" height="160" fill="#02091f"/>
+    <rect x="1408" y="98" width="34" height="22" rx="3" fill="#0a1a45" stroke="#1a3275" stroke-width="1"/>
+    <circle class="lamp warm" cx="1416" cy="109" r="3.2"/>
+    <circle class="lamp" cx="1425" cy="109" r="3.2"/>
+    <circle class="lamp warm" cx="1434" cy="109" r="3.2"/>
+    <ellipse cx="1425" cy="160" rx="80" ry="240" fill="url(#glow)" opacity=".35"/>
+  </g>
+
+  <!-- Pitch + center circle hint -->
+  <g opacity=".6">
+    <ellipse cx="800" cy="394" rx="780" ry="40" fill="#062a1a"/>
+    <ellipse cx="800" cy="394" rx="780" ry="40" fill="none" stroke="#ffc906" stroke-width="1" stroke-opacity=".35"/>
+    <ellipse cx="800" cy="394" rx="120" ry="14" fill="none" stroke="#ffc906" stroke-width="1.2" stroke-opacity=".5"/>
+    <line x1="800" y1="380" x2="800" y2="400" stroke="#ffc906" stroke-width="1" stroke-opacity=".4"/>
+  </g>
+
+  <!-- Goalposts (tiny accents at far ends of the pitch) -->
+  <g stroke="#ffe48a" stroke-width="1.4" fill="none" opacity=".7">
+    <path d="M 80 396 L 80 380 L 110 380 L 110 396"/>
+    <path d="M 1520 396 L 1520 380 L 1490 380 L 1490 396"/>
+  </g>
+
+  <!-- Crowd dots in the bowl -->
+  <g fill="#1a2a55" opacity=".7">
+    <circle cx="80"  cy="305" r="1.4"/><circle cx="160" cy="300" r="1.4"/>
+    <circle cx="240" cy="295" r="1.4"/><circle cx="340" cy="292" r="1.4"/>
+    <circle cx="440" cy="290" r="1.4"/><circle cx="600" cy="288" r="1.4"/>
+    <circle cx="760" cy="286" r="1.4"/><circle cx="900" cy="288" r="1.4"/>
+    <circle cx="1040" cy="290" r="1.4"/><circle cx="1180" cy="292" r="1.4"/>
+    <circle cx="1300" cy="296" r="1.4"/><circle cx="1420" cy="302" r="1.4"/>
+    <circle cx="1520" cy="306" r="1.4"/>
+  </g>
+</svg>
+</div>
+
+<!-- ===== Main stage ===== -->
+<div class="stage">
+  <header class="hud">
+    <div class="brand">
+      <div class="logos">
+        <div class="logo-card"><img src="assets/fc-mobile.jpg" alt="EA Sports FC Mobile"></div>
+        <span class="x">×</span>
+        <div class="logo-card"><img src="assets/redbull-meo.jpg" alt="Red Bull M.E.O."></div>
+      </div>
+      <div class="meta">
+        <div class="title">REACTION <span>SHOT</span></div>
+        <div class="subtitle">FC Mobile · Red Bull M.E.O.</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="label">Round</div><div class="value" id="round-val">0/5</div></div>
+      <div class="stat"><div class="label">Best (ms)</div><div class="value" id="best-val">—</div></div>
+      <div class="stat"><div class="label">Avg (ms)</div><div class="value" id="avg-val">—</div></div>
+    </div>
+  </header>
+
+  <main class="arena" id="arena">
+    <div class="reticle"></div>
+    <div class="number" id="number"><span class="slot" id="seg-tens"></span><span class="slot" id="seg-ones">0</span><span class="slot dot">.</span><span class="slot" id="seg-deca">0</span><span class="slot" id="seg-centi">0</span></div>
+    <div class="toast" id="toast"></div>
+    <div class="prompt" id="prompt">
+      <div class="key">PRESS SPACE OR CLICK</div>
+      <div class="hint">only when the number turns <b>yellow</b></div>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div>M.E.O. · Middle East Open · Powered by Red Bull</div>
+    <div class="right">EA SPORTS FC MOBILE</div>
+  </footer>
+</div>
+
+<!-- ===== Start / End overlay ===== -->
+<div class="overlay" id="overlay">
+  <div class="panel" id="panel">
+    <div class="panel-logos">
+      <div class="card"><img src="assets/fc-mobile.jpg" alt="EA Sports FC Mobile"></div>
+      <span class="x">×</span>
+      <div class="card"><img src="assets/redbull-meo.jpg" alt="Red Bull M.E.O."></div>
+    </div>
+    <h1>REACTION <span>SHOT</span></h1>
+    <p class="tag">FC Mobile × Red Bull M.E.O.</p>
+    <div class="rules">
+      A stopwatch ticks up from <b>0.00</b>.<br>
+      A random second is the winning one — the display flashes <b>yellow</b> for a short window starting at that second (e.g. <b>6.00 → ~6.35</b>).<br>
+      Hit <b>SPACE</b> or <b>CLICK</b> anywhere during the yellow window. <span class="x">Do NOT</span> press on white.<br>
+      Five rounds. Fastest reaction wins.
+    </div>
+    <button class="btn" id="start-btn">START</button>
+    <div class="hint">or press space · click anywhere</div>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  const TOTAL_ROUNDS = 5;
+  const BOLT_YELLOW = '#FFC906';        // Red Bull yellow — the "go" color
+  const DECOY_COLOR = '#ffffff';        // stable color for every non-target frame
+
+  // Stopwatch range. The yellow window opens at a whole second (e.g. 6.00) and
+  // closes 350ms later. Tight enough to require reaction, but the user can watch
+  // the seconds tick up and mentally prepare.
+  const TARGET_MIN_SEC = 2;
+  const TARGET_MAX_SEC = 13;
+  const GREEN_WINDOW_MS = 350;          // window is 0.35s wide
+
+  const $number = document.getElementById('number');
+  const $segTens  = document.getElementById('seg-tens');
+  const $segOnes  = document.getElementById('seg-ones');
+  const $segDeca  = document.getElementById('seg-deca');
+  const $segCenti = document.getElementById('seg-centi');
+  const $toast = document.getElementById('toast');
+  const $prompt = document.getElementById('prompt');
+  const $roundVal = document.getElementById('round-val');
+  const $bestVal = document.getElementById('best-val');
+  const $avgVal = document.getElementById('avg-val');
+  const $overlay = document.getElementById('overlay');
+  const $panel = document.getElementById('panel');
+  const $startBtn = document.getElementById('start-btn');
+
+  let round = 0;
+  let times = [];
+  let state = 'idle';      // idle | running | target | resolved | done
+  let acceptingInput = false;
+  let rafId = null;
+  let roundStartAt = 0;
+  let targetMs = 0;
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+  function randInt(min, max) { return Math.floor(rand(min, max + 1)); }
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function setNumberMs(ms) {
+    const hundredths = Math.floor(ms / 10);
+    const seconds = Math.floor(hundredths / 100);
+    const centi = hundredths % 100;
+    const showTens = seconds >= 10;
+    $segTens.textContent  = showTens ? String(Math.floor(seconds / 10)) : '';
+    $segOnes.textContent  = String(seconds % 10);
+    $segDeca.textContent  = String(Math.floor(centi / 10));
+    $segCenti.textContent = String(centi % 10);
+    $number.classList.toggle('no-tens', !showTens);
+  }
+
+  function setNumberColor(color) {
+    $number.style.color = color;
+    $number.style.textShadow = '0 0 40px ' + color;
+  }
+
+  function showToast(text, cls) {
+    $toast.textContent = text;
+    $toast.className = 'toast show ' + cls;
+    setTimeout(() => { $toast.classList.remove('show'); }, 1100);
+  }
+
+  function updateStats() {
+    $roundVal.textContent = `${Math.min(round, TOTAL_ROUNDS)}/${TOTAL_ROUNDS}`;
+    if (times.length) {
+      const best = Math.min(...times);
+      const avg = Math.round(times.reduce((a,b) => a+b, 0) / times.length);
+      $bestVal.textContent = best;
+      $avgVal.textContent = avg;
+    } else {
+      $bestVal.textContent = '—';
+      $avgVal.textContent = '—';
+    }
+  }
+
+  function clearTimers() {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+  }
+
+  function startGame() {
+    clearTimers();
+    round = 0;
+    times = [];
+    updateStats();
+    $overlay.classList.add('hidden');
+    $prompt.classList.add('hidden');
+    nextRound();
+  }
+
+  function nextRound() {
+    round += 1;
+    updateStats();
+    if (round > TOTAL_ROUNDS) {
+      endGame();
+      return;
+    }
+    startRound();
+  }
+
+  function startRound() {
+    targetMs = randInt(TARGET_MIN_SEC, TARGET_MAX_SEC) * 1000;
+    roundStartAt = performance.now();
+    state = 'running';
+    acceptingInput = true;
+    setNumberMs(0);
+    setNumberColor(DECOY_COLOR);
+    tick();
+  }
+
+  function tick() {
+    if (state !== 'running' && state !== 'target') return;
+    const now = performance.now();
+    const elapsed = now - roundStartAt;
+
+    if (elapsed >= targetMs + GREEN_WINDOW_MS) {
+      state = 'resolved';
+      acceptingInput = false;
+      setNumberMs(targetMs);
+      setNumberColor('#ff3a55');
+      showToast('TOO SLOW', 'miss');
+      setTimeout(nextRound, 900);
+      return;
+    }
+
+    if (elapsed >= targetMs) {
+      if (state !== 'target') {
+        state = 'target';
+        setNumberColor(BOLT_YELLOW);
+      }
+    }
+
+    setNumberMs(elapsed);
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function handleSpace() {
+    if (!acceptingInput) return;
+
+    if (state === 'target') {
+      clearTimers();
+      acceptingInput = false;
+      const now = performance.now();
+      const elapsed = now - roundStartAt;
+      const dt = Math.round(elapsed - targetMs);
+      times.push(dt);
+      updateStats();
+      setNumberMs(elapsed);
+      setNumberColor(BOLT_YELLOW);
+      state = 'resolved';
+      showToast(`${dt} ms`, 'hit');
+      setTimeout(nextRound, 900);
+      return;
+    }
+
+    if (state === 'running') {
+      clearTimers();
+      acceptingInput = false;
+      state = 'resolved';
+      setNumberColor('#ff3a55');
+      showToast('FALSE START', 'miss');
+      setTimeout(nextRound, 900);
+    }
+  }
+
+  function endGame() {
+    state = 'done';
+    acceptingInput = false;
+    clearTimers();
+    setNumberColor(BOLT_YELLOW);
+
+    const best = times.length ? Math.min(...times) : null;
+    const avg = times.length ? Math.round(times.reduce((a,b)=>a+b,0)/times.length) : null;
+
+    let grade = '—';
+    if (best !== null) {
+      if (best < 180) grade = 'S · LIGHTNING';
+      else if (best < 230) grade = 'A · ELITE';
+      else if (best < 290) grade = 'B · SHARP';
+      else if (best < 360) grade = 'C · STEADY';
+      else grade = 'D · WARM-UP';
+    }
+
+    const failed = best === null;
+
+    $panel.classList.add('result');
+    $panel.innerHTML = `
+      <div class="panel-logos">
+        <div class="card"><img src="assets/fc-mobile.jpg" alt="EA Sports FC Mobile"></div>
+        <span class="x">×</span>
+        <div class="card"><img src="assets/redbull-meo.jpg" alt="Red Bull M.E.O."></div>
+      </div>
+      <h1>MATCH <span>COMPLETE</span></h1>
+      <p class="tag">FC Mobile × Red Bull M.E.O.</p>
+      <div class="big ${failed ? 'bad' : ''}">${failed ? 'NO TIME' : best + ' ms'}</div>
+      <div class="sub">Best Reaction</div>
+      ${failed ? '' : `<div class="sub" style="margin-top:14px">Avg ${avg} ms · ${times.length}/${TOTAL_ROUNDS} hits</div>`}
+      ${failed ? '' : `<div class="grade">${grade}</div>`}
+      <div style="margin-top:28px"><button class="btn" id="restart-btn">PLAY AGAIN</button></div>
+      <div class="hint">or press space · click anywhere</div>
+    `;
+    $overlay.classList.remove('hidden');
+  }
+
+  // ---- Input ----
+  document.addEventListener('keydown', (e) => {
+    if (e.code !== 'Space' && e.key !== ' ') return;
+    e.preventDefault();
+    if (e.repeat) return;
+
+    if (state === 'idle' || state === 'done') {
+      startGame();
+      return;
+    }
+    handleSpace();
+  });
+
+  // Click anywhere on the start / end overlay to begin or restart.
+  $overlay.addEventListener('click', () => {
+    if (state === 'idle' || state === 'done') startGame();
+  });
+
+  // Click in the arena counts as a press during active gameplay.
+  document.getElementById('arena').addEventListener('click', () => {
+    if (state === 'idle' || state === 'done') return;
+    handleSpace();
+  });
+
+  updateStats();
+})();
+</script>
+</body>
+</html>

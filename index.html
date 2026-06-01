@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>FC Mobile × Red Bull M.E.O. · Reaction Shot</title>
+<title>Red Bull M.E.O. · Reaction Shot</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,6 +95,16 @@
     height: 100%;
     width: auto;
     display: block;
+  }
+  /* M.E.O. artwork already has its own dark background — drop the white card */
+  .brand .logo-card.meo, .panel .panel-logos .card.meo {
+    background: transparent;
+    padding: 0;
+    overflow: hidden;
+  }
+  .brand .logo-card.meo img, .panel .panel-logos .card.meo img {
+    border-radius: inherit;
+    object-fit: cover;
   }
   .brand .x {
     font-family: 'Anton', sans-serif;
@@ -379,13 +389,11 @@
   <header class="hud">
     <div class="brand">
       <div class="logos">
-        <div class="logo-card"><img src="assets/fc-mobile.svg" alt="EA Sports FC Mobile"></div>
-        <span class="x">×</span>
-        <div class="logo-card"><img src="assets/redbull-meo.jpg" alt="Red Bull M.E.O."></div>
+        <div class="logo-card meo"><img src="assets/redbull-meo.png" alt="Red Bull M.E.O."></div>
       </div>
       <div class="meta">
         <div class="title">REACTION <span>SHOT</span></div>
-        <div class="subtitle">FC Mobile · Red Bull M.E.O.</div>
+        <div class="subtitle">Red Bull M.E.O.</div>
       </div>
     </div>
     <div class="stats">
@@ -407,7 +415,7 @@
 
   <footer class="foot">
     <div>M.E.O. · Middle East Open · Powered by Red Bull</div>
-    <div class="right">EA SPORTS FC MOBILE</div>
+    <div class="right">RED BULL M.E.O.</div>
   </footer>
 </div>
 
@@ -415,12 +423,10 @@
 <div class="overlay" id="overlay">
   <div class="panel" id="panel">
     <div class="panel-logos">
-      <div class="card"><img src="assets/fc-mobile.svg" alt="EA Sports FC Mobile"></div>
-      <span class="x">×</span>
-      <div class="card"><img src="assets/redbull-meo.jpg" alt="Red Bull M.E.O."></div>
+      <div class="card meo"><img src="assets/redbull-meo.png" alt="Red Bull M.E.O."></div>
     </div>
     <h1>REACTION <span>SHOT</span></h1>
-    <p class="tag">FC Mobile × Red Bull M.E.O.</p>
+    <p class="tag">Red Bull M.E.O.</p>
     <div class="rules">
       A stopwatch ticks up from <b>0.00</b>.<br>
       Stop it as close to <b>7.00</b> as you can — press <b>SPACE</b> or <b>CLICK</b> anywhere.<br>
@@ -622,12 +628,10 @@
     $panel.classList.add('result');
     $panel.innerHTML = `
       <div class="panel-logos">
-        <div class="card"><img src="assets/fc-mobile.svg" alt="EA Sports FC Mobile"></div>
-        <span class="x">×</span>
-        <div class="card"><img src="assets/redbull-meo.jpg" alt="Red Bull M.E.O."></div>
+        <div class="card meo"><img src="assets/redbull-meo.png" alt="Red Bull M.E.O."></div>
       </div>
       <h1>MATCH <span>COMPLETE</span></h1>
-      <p class="tag">FC Mobile × Red Bull M.E.O.</p>
+      <p class="tag">Red Bull M.E.O.</p>
       <div class="big ${failed ? 'bad' : ''}">${failed ? 'NO TIME' : best + ' ms'}</div>
       <div class="sub">Closest to 7.00</div>
       ${failed ? '' : `<div class="sub" style="margin-top:14px">Avg ${avg} ms off · ${times.length}/${TOTAL_ROUNDS} stops</div>`}
